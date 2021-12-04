@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Text, View } from 'react-native';
+import { TextInput, Text, View } from 'react-native';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 // import { MaterialCommunityIcons } from '@expo/vector-icons';
 // {/* <MaterialCommunityIcons name="email" size={100} color="dodgerblue"  /> */}
@@ -13,32 +13,28 @@ import Icon from './app/components/Icon';
 import ListItem from './app/components/ListItem';
 import AccountScreen from './app/screens/AccountScreen';
 import ListingsScreen from './app/screens/ListingsScreen';
-import AppTextInput from './app/components/AppTextInput';
-import AppPicker from './app/components/AppPicker';
-import LoginScreen from './app/screens/LoginScreen';
 
 // import AppText from './app/components/AppText';
 
-
 export default function App() {
-  // const [firstName, setFirstName] = useState('');
-  // const [isNew, setIsNew] = useState(false);
+  const [firstName, setFirstName] = useState('');
 
   return (
-    <LoginScreen />
-    // <ListingsScreen />
-    // <AccountScreen />
-    // <Screen>
-    //   <ListItem
-    //   title="My title"
-    //   // subTitle="My subtitle"
-    //   ImageComponent={<Icon name='email' />}
-    //   />
-    // </Screen>
-    // <MessagesScreen />
-    // <ViewImageScreen />
-  // <ListingDetailsScreen />
-  // <WelcomeScreen></WelcomeScreen>
+    <Screen>
+      <TextInput
+        maxLength={11}
+        // keyboardType='email-address' // or numeric, etc.
+        clearButtonMode='always'
+        secureTextEntry // === secureTextEntry={true}  <-- if prop is Boolean and set to true, only the prop name is needed if you prefer a shorthand version
+        onChangeText={text => setFirstName(text)}
+        placeholder="First Name" 
+        style={{
+          borderBottomColor: '#ccc',
+          borderBottomWidth: 1,
+        }}
+      />
+      <Text>{firstName}</Text>
+    </Screen>
   )
 }
 
