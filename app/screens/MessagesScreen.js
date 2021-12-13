@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 /*  Read about { SectionList } as a more advanced alternative to { FlatList } */
-import ListItem from '../components/ListItem';
-import ListItemDeleteAction from '../components/ListItemDeleteAction';
-import ListItemSeparator from '../components/ListItemSeparator';
+import ListItem from '../components/lists/ListItem';
+import ListItemDeleteAction from '../components/lists/ListItemDeleteAction';
+import ListItemSeparator from '../components/lists/ListItemSeparator';
 import Screen from '../components/Screen';
 
 const initialMessages =[
@@ -13,12 +13,19 @@ const initialMessages =[
     description: 'D1',
     image: require('../assets/mosh.jpg'),
     },
-{   
-    id: 2,
-    title: 'T2',
-    description: 'D2',
-    image: require('../assets/mosh.jpg'),
-}
+    {   
+        id: 2,
+        title: 'T2',
+        description: 'D2',
+        image: require('../assets/mosh.jpg'),
+    },
+    {   
+        id: 3,
+        title: 'Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip. Sea lettuce lettuce water chestnut eggplant winter purslane fennel azuki bean earthnut pea sierra leone bologi leek soko chicory celtuce parsley jícama salsify.',
+        description: 'Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip. Sea lettuce lettuce water chestnut eggplant winter purslane fennel azuki bean earthnut pea sierra leone bologi leek soko chicory celtuce parsley jícama salsify.',
+        image: require('../assets/mosh.jpg'),
+    },
+    
 ];
 
 
