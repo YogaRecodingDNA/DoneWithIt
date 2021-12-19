@@ -1,5 +1,4 @@
 import React from 'react';
-import {  } from 'react-native';
 import { useFormikContext } from 'formik'; // To use the formik objects
 
 import TextInput from '../TextInput';
@@ -25,5 +24,5 @@ export default function AppFormField({ name, width, ...otherProps }) {
             />
             <ErrorMessage error={errors[name]} visible={touched[name]} /> 
         </>
-    )
+    );
 }
