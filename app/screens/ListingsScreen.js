@@ -21,17 +21,18 @@ const listings =[
     },
 ];
 
-export default function ListingsScreen() {
+export default function ListingsScreen({ navigation }) {
     return (
         <Screen style={styles.screen}>
             <FlatList 
-            data={listings}
-            keyExtractor={listing => listing.id.toString()} // .toString() --> FLATLIST EXPECTS A STRING AS A UNIQUE IDENTIFIER 
-            renderItem={({item}) => // ALWAYS DESTRUCTURE THIS FUNCTION PARAM
+                data={listings}
+                keyExtractor={listing => listing.id.toString()} // .toString() --> FLATLIST EXPECTS A STRING AS A UNIQUE IDENTIFIER 
+                renderItem={({item}) => // ALWAYS DESTRUCTURE THIS FUNCTION PARAM
                 <Card 
-                title={item.title}
-                subTitle={"$" + item.price}
-                image={item.image}
+                    title={item.title}
+                    subTitle={"$" + item.price}
+                    image={item.image}
+                    onPress={() => navigation.navigate("ListingDetails", item) }
                 />
             }
             />

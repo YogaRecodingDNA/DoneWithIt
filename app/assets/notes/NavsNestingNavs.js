@@ -26,9 +26,6 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import AuthNavigator from './app/navigation/AuthNavigator';
-import navigationTheme from './app/navigation/navigationTheme';
-import AppNavigator from './app/navigation/AppNavigator';
 
 const Tweets = ({ navigation }) => (
   <Screen>
@@ -77,7 +74,7 @@ const Account = () => (
   </Screen>
 );
 
-
+// NESTING StackNavigator into Tab.Navigator =======================================
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => (
   <Tab.Navigator>
@@ -85,14 +82,13 @@ const TabNavigator = () => (
     <Tab.Screen name="Account" component={Account} />
   </Tab.Navigator>
 )
-
+// =================================================================================
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
   
   return (
-    <NavigationContainer theme={navigationTheme}>
-      {isLoggedIn ? <AppNavigator /> : <AuthNavigator />}
+    <NavigationContainer>
+      <TabNavigator />
     </NavigationContainer>
   )
 }

@@ -43,8 +43,8 @@ export default function AccountScreen() {
                     title={item.title}
                     IconComponent={
                         <Icon
-                        name={item.icon.name}
-                        backgroundColor={item.icon.backgroundColor}
+                            name={item.icon.name}
+                            backgroundColor={item.icon.backgroundColor}
                         />
                     }
                 />
