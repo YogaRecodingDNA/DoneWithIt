@@ -9,34 +9,38 @@ import Card from '../components/Card';
 import colors from '../config/colors';
 import listingsApi from '../api/listings';
 import routes from '../navigation/routes';
+import useApi from '../hooks/useApi';
 
 
 export default function ListingsScreen({ navigation }) {
-    const [listings, setListings] = useState([]);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const {data: listings, error, loading, request: loadListings} = useApi(listingsApi.getListings);
+    // For multiple API calls using the same API HOOK, the dextructuring wouldn't work since 2 api calls would be referencing the same variables 
+    // ...instead use --> const getListingsApi = useApi(listingsApi.getListings); and access as methods eg getListingsApi.data
+    // const [listings, setListings] = useState([]);
+    // const [error, setError] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         // listingsApi.getListings(); // Cannot create async/promise function inside useEffect hook
-        loadListings();
+        loadListings(1, 2, 3);
         console.log("useEffect Fired off ", loadListings());
     }, []);
     
-    const loadListings = async () => { // API SAUCE always resolves a promise even if null
-        // (no space) connecting the following 3 statements as 1 Story ========================================
-        setLoading(true);
-        const response = await listingsApi.getListings(); // The object returned from this method contains a "data" property which contains the data we get from the server.
-        setLoading(false);
-        // ===============================================================================
-        // ALWAYS WRITE ERROR HANDLING CODE FIRST (BEST PRACTICE)
-        if (!response.ok) return setError(true); // response.problem gives type of error
+    // const loadListings = async () => { // API SAUCE always resolves a promise even if null
+    //     // (no space) connecting the following 3 statements as 1 Story ========================================
+    //     setLoading(true);
+    //     const response = await listingsApi.getListings(); // The object returned from this method contains a "data" property which contains the data we get from the server.
+    //     setLoading(false);
+    //     // ===============================================================================
+    //     // ALWAYS WRITE ERROR HANDLING CODE FIRST (BEST PRACTICE)
+    //     if (!response.ok) return setError(true); // response.problem gives type of error
         
-        setError(false); 
-        setListings(response.data);
-        // console.log("response.data === ", response.data );
-    };
+    //     setError(false); 
+    //     setListings(response.data);
+    //     // console.log("response.data === ", response.data );
+    // };
 
-    console.log("listings === ", listings);
+    // console.log("listings === ", listings);
 
     return (
         <Screen style={styles.screen}>
