@@ -5,13 +5,15 @@ import AppText from '../components/Text';
 import ListItem from '../components/lists/ListItem';
 import colors from '../config/colors';
 
-export default function ListingDetailsScreen(props) {
+export default function ListingDetailsScreen({ route }) { // "route" and "navigation" props available because this component is being used in the Navigator
+    const listing = route.params;
+
     return (
         <View>
-            <Image style={styles.image} source={require('../assets/jacket.jpg')} />
+            <Image style={styles.image} source={listing.image} />
             <View style={styles.detailsContainer}>
-                <AppText style={styles.title}>Red jacket for sale</AppText>
-                <AppText style={styles.price}>$100</AppText>
+                <AppText style={styles.title}>{listing.title}</AppText>
+                <AppText style={styles.price}>${listing.price}</AppText>
                 <View style={styles.userContainer}>
                     <ListItem
                         image={require("../assets/mosh.jpg")}

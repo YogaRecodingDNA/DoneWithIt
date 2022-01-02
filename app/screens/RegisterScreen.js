@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 
 import Screen from '../components/Screen';
 
-import { AppForm, AppFormField, SubmitButton } from '../components/forms';
+import { Form, FormField, SubmitButton } from '../components/forms';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
@@ -17,11 +17,12 @@ export default function RegisterScreen() {
 
     return (
         <Screen style={styles.container}>
-            <AppForm initialValues={{ email: "", name: "", password: "" }}
-            onSubmit={values => console.log(values)}
-            validationSchema={validationSchema}
+            <Form 
+                initialValues={{ email: "", name: "", password: "" }}
+                onSubmit={values => console.log(values)}
+                validationSchema={validationSchema}
             >
-                <AppFormField
+                <FormField
                     autoCapitalize="words"
                     autoCorrect={false}
                     icon="account"
@@ -30,7 +31,7 @@ export default function RegisterScreen() {
                     placeholder="Name"
                     textContentType="name"
                 />
-                <AppFormField
+                <FormField
                     autoCapitalize="none"
                     autoCorrect={false}
                     icon="email"
@@ -39,7 +40,7 @@ export default function RegisterScreen() {
                     placeholder="Email"
                     textContentType="emailAddress"
                 />
-                <AppFormField
+                <FormField
                     autoCapitalize="none"
                     autoCorrect={false}
                     icon="lock"
@@ -49,7 +50,7 @@ export default function RegisterScreen() {
                     textContentType="password"
                 />
                 <SubmitButton title="Register" />
-            </AppForm>
+            </Form>
         </Screen>
     )
 }

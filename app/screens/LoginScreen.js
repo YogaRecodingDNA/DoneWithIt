@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 
 import Screen from '../components/Screen';
 
-import { AppForm, AppFormField, SubmitButton } from '../components/forms';
+import { Form, FormField, SubmitButton } from '../components/forms';
 
 // CREATE YOUR VALIDATION SCHEMA OUTSIDE OF THE FUNCTION COMPONENT SO
 // THAT ITS NOT REDEFINED EVERY TIME THE FUNCTION GETS RERENDERED
@@ -25,12 +25,12 @@ export default function LoginScreen() {
                 style={styles.logo}
                 source={require('../assets/logo-red.png')}
             />
-            <AppForm initialValues={{ email: "", password: "" }}
+            <Form initialValues={{ email: "", password: "" }}
             onSubmit={values => console.log(values)} // onSubmit takes an object as the argument
             // "onSubmit" --> Ultimately here you would call the server and submit the form's credentials to it
             validationSchema={validationSchema}
             >
-                <AppFormField
+                <FormField
                     autoCapitalize="none" // so the 1st letter of the email address is not capitalized
                     autoCorrect={false} // to avoid iOS or Android correcting the spelling
                     icon="email"
@@ -39,7 +39,7 @@ export default function LoginScreen() {
                     placeholder="Email"
                     textContentType="emailAddress" // For autofilling user's address from their keychain (Only works on iOS)
                 />
-                <AppFormField
+                <FormField
                     autoCapitalize="none"
                     autoCorrect={false}
                     icon="lock"
@@ -49,7 +49,7 @@ export default function LoginScreen() {
                     textContentType="password" // For autofilling user's password from their keychain (Only works on iOS)
                 />
                 <SubmitButton title="Login" />
-            </AppForm>
+            </Form>
         </Screen>
     )
 }
