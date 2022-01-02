@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import * as Yup from 'yup';
-
 
 import {
     Form,
@@ -11,10 +10,11 @@ import {
 } from '../components/forms';
 
 import CategoryPickerItem from '../components/CategoryPickerItem';
-
-import Screen from '../components/Screen';
 import FormImagePicker from '../components/forms/FormImagePicker';
+import listingsApi from '../api/listings';
+import Screen from '../components/Screen';
 import useLocation from '../hooks/useLocation';
+import UploadScreen from './UploadScreen';
 
 const validationSchema = Yup.object().shape({
     title: Yup.string().required().min(1).label("Title"),
@@ -39,27 +39,29 @@ const categories = [
 
 export default function ListingEditScreen() {
     const location = useLocation();
-    /* CREATED CUSTOM HOOK --> MOVED TO /hooks/useLocation
-    const [location, setLocation] = useState();
 
-    const getLocation = async () => {
-        const { granted } = await Location.requestForegroundPermissionsAsync(); // Method returns object "result: { granted: boolean}"
-        if(!granted) return; // So the promise isn't waiting endlessly
-        const { coords: {latitude, longitude} } = await Location.getLastKnownPositionAsync(); // getLastKnownPosition() not as accurate as getCurrentPosition() but performs faster
-        // Method returns object "result: { coords: coordinates: { accuracy, altitude, heading, latitude, longitude }}"
-        setLocation({ latitude, longitude });
+    const [uploadVisible, setUploadVisible] = useState(false);
+    const [progress, setProgress] = useState(false);
+
+    const handleSubmit = async (listing) => {
+        setUploadVisible(true);
+        // listing.location = location; // This approach touches the object that formik gives us
+        const result = await listingsApi.addListing(
+            { ...listing, location}, // This approach spreads the existing properties of the listings object and adds the location to the request as opposed to the above approach which manipulates the formik object.
+            progress => setProgress(progress)  // 2nd arg we're passing a function to the child
+        );
+        
+        setUploadVisible(false);
+
+        if (!result.ok) return alert('Could not save the listing.');
+
+        alert('Success');
+        
     };
-    
-    useEffect(() => {
-        // const result = await Location.requestForegroundPermissionsAsync();
-        // Cannot have async functions inside useEffect so created the function outside and called inside 
-        getLocation();
-    }, []);
-    */
-    
 
     return (
         <Screen style={styles.container}>
+            <UploadScreen progress={progress} visible={uploadVisible} />
             <Form
                 initialValues={{
                     title: "",
@@ -68,7 +70,7 @@ export default function ListingEditScreen() {
                     category: null,
                     images: [], // Yup validation schema above doesn't need the "required()" method since we initiate an empty array (will never be null)
                 }}
-                onSubmit={(values) => console.log(location)}
+                onSubmit={handleSubmit}
                 validationSchema={validationSchema}
             >
                 <FormImagePicker name="images" />
