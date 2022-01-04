@@ -5,22 +5,16 @@ import TextInput from '../TextInput';
 import ErrorMessage from './ErrorMessage';
 
 export default function AppFormField({ name, width, ...otherProps }) {
-    const { errors, handleChange, setFieldTouched, touched } = useFormikContext();
+    const { errors, setFieldTouched, setFieldValue, touched, values } = useFormikContext();
 
     return (
         <>
             <TextInput
-                // autoCapitalize="none" // so the 1st letter of the email address is not capitalized
-                // autoCorrect={false} // to avoid iOS or Android correcting the spelling
-                // icon="email"
-                // keyboardType="email-address"
                 onBlur={() => setFieldTouched(name)}
-                onChangeText={handleChange(name)}
+                onChangeText={(text) => setFieldValue(name, text)}
+                value={values[name]}
                 width={width}
                 {...otherProps}
-                // onChangeText={(text) => setEmail(text)}
-                // placeholder="Email"
-                // textContentType="emailAddress" // For autofilling user's address from their keychain (Only works on iOS)
             />
             <ErrorMessage error={errors[name]} visible={touched[name]} /> 
         </>

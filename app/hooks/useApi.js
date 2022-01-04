@@ -20,4 +20,4 @@ export default useApi = (apiFunc) => {
     };
 
     return { data, error, loading, request };
-}
+};
