@@ -39,29 +39,31 @@ const categories = [
 
 export default function ListingEditScreen() {
     const location = useLocation();
-
     const [uploadVisible, setUploadVisible] = useState(false);
-    const [progress, setProgress] = useState(false);
+    const [progress, setProgress] = useState(0);
 
-    const handleSubmit = async (listing) => {
-        setUploadVisible(true);
+    const handleSubmit = async (listing, { resetForm } ) => { // resetForm is a property who's value is a function. The property is inside a formik object called formikBag
+        setProgress(0); // Ensures the progress bar is reset prior to each upload
+        setUploadVisible(true); // Shows uploading animation screen
         // listing.location = location; // This approach touches the object that formik gives us
         const result = await listingsApi.addListing(
             { ...listing, location}, // This approach spreads the existing properties of the listings object and adds the location to the request as opposed to the above approach which manipulates the formik object.
-            progress => setProgress(progress)  // 2nd arg we're passing a function to the child
+            (progress) => setProgress(progress)  // 2nd arg we're passing a function to the child
         );
         
-        setUploadVisible(false);
+        // If promise returns falsy
+        if (!result.ok) {
+            setUploadVisible(false); // Hides uploading animation screen
+            return alert('Could not save the listing.');
+        }
 
-        if (!result.ok) return alert('Could not save the listing.');
+        resetForm();
 
-        alert('Success');
-        
     };
 
     return (
         <Screen style={styles.container}>
-            <UploadScreen progress={progress} visible={uploadVisible} />
+            <UploadScreen onDone={() => setUploadVisible(false)} progress={progress} visible={uploadVisible} />
             <Form
                 initialValues={{
                     title: "",
